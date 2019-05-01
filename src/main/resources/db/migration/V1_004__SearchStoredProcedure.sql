@@ -81,14 +81,8 @@ BEGIN
 	SELECT * FROM [dbo].[tbl_Transactions] ORDER BY id OFFSET @page_num ROWS FETCH NEXT @page_size ROWS ONLY
 END
 
-USE [discover_post_inject_web]
 GO
-/****** Object:  StoredProcedure [dbo].[uspGetAllMerchantUser]    Script Date: 5/1/2019 7:11:49 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-ALTER PROCEDURE [dbo].[uspGetAllMerchantUser]
+ CREATE PROCEDURE [dbo].[uspGetAllMerchantUser]
 @page_num int,
 @page_size int
 
@@ -96,6 +90,27 @@ AS
 BEGIN
 	SELECT [id],[filename],[initiator],[date_converted],[total_transaction]
 	FROM [dbo].[tbl_Transactions]
+	ORDER BY [id]
+OFFSET (@page_num - 1) * @page_size ROWS
+FETCH NEXT @page_size ROWS ONLY;
+END
+
+GO
+ ALTER PROCEDURE [dbo].[uspGetAllMerchantUser]
+@search_key varchar(255) = NULL,
+@page_num int,
+@page_size int
+
+AS
+BEGIN
+	SELECT [id],[filename],[initiator],[date_converted],[total_transaction]
+	FROM [dbo].[tbl_Transactions]
+	WHERE [filename] LIKE '%'+@search_key+'%' OR
+            [initiator] LIKE '%'+@search_key+'%' OR
+            [date_converted] LIKE '%'+@search_key+'%' OR
+            [total_transaction] LIKE '%'+@search_key+'%' OR
+			@search_key = '' OR
+			@search_key IS NULL
 	ORDER BY [id]
 OFFSET (@page_num - 1) * @page_size ROWS
 FETCH NEXT @page_size ROWS ONLY;

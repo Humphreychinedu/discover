@@ -108,6 +108,6 @@ public class FileController {
 
     @RequestMapping("/transactions")
     public Page<Transaction> getTransactions(QueryRequest request) {
-        return transactionService.getAll(request);
+        return transactionService.findAll(request);
     }
 }

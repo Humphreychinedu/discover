@@ -3,7 +3,7 @@ package com.interswitchgroup.discoverpostinjectweb.dto.params;
 public class PageParams extends SearchParams {
 
     private static final int PAGE_NUM_DEFAULT = 1;
-    private static final int PAGE_SIZE_DEFAULT = 20;
+    private static final int PAGE_SIZE_DEFAULT = 10;
 
     private Integer pageNum;
     private Integer pageSize;

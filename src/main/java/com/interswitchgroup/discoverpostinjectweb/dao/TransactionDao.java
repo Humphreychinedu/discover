@@ -24,9 +24,10 @@ public class TransactionDao extends AbstractBaseDao<Transaction> {
         this.jdbcTemplate.setResultsMapCaseInsensitive(true);
 
         create = new SimpleJdbcCall(jdbcTemplate).withProcedureName("psp_transaction").withReturnValue();
-        findAll = new SimpleJdbcCall(jdbcTemplate).withProcedureName("psp_find_all_transaction")
-        .returningResultSet(COUNT, new RowCountMapper())
-        .returningResultSet(LIST, new BeanPropertyRowMapper<>(Transaction.class));
+        findAll = new SimpleJdbcCall(jdbcTemplate).withProcedureName("uspGetAllMerchantUser")
+                .returningResultSet(MULTIPLE_RESULT, new BeanPropertyRowMapper<>(Transaction.class))
+                .returningResultSet(RESULT_COUNT, new RowCountMapper());
+
         getAll = new SimpleJdbcCall(jdbcTemplate).withProcedureName("uspGetAllMerchantUser")
                 .returningResultSet(MULTIPLE_RESULT, BeanPropertyRowMapper.newInstance(Transaction.class))
                 .returningResultSet(RESULT_COUNT, new RowCountMapper());

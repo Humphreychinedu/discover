@@ -35,11 +35,11 @@ public abstract class AbstractBaseDao<T extends BaseEntity> implements BaseDao<T
     }
 
     public List<T> findAll() {
-        return this.findAll(0, 0).getContent();
+        return this.findAll(0, 0, "").getContent();
     }
 
-    public Page<T> findAll(int pageNum, int pageSize) throws DataAccessException {
-        SqlParameterSource in = (new MapSqlParameterSource()).addValue("id", Integer.valueOf(0))
+    public Page<T> findAll(int pageNum, int pageSize, String searchKey) throws DataAccessException {
+        SqlParameterSource in = (new MapSqlParameterSource()).addValue("search_key", searchKey)
                 .addValue("pageNum", Integer.valueOf(pageNum))
                 .addValue("pageSize", pageSize == 0 ? null : Integer.valueOf(pageSize));
         Map<String, Object> m = findAll.execute(in);

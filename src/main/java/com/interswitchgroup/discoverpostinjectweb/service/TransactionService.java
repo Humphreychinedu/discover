@@ -28,13 +28,10 @@ public class TransactionService {
         transactionDao.create(transaction);
         return new CreateTransactionResponse("201", "Transaction record was saved successfully");
     }
-//
-//    public Page<Transaction> findAll(QueryRequest request) {
-//        int pageNum = request.getPageNumber() == null ? 0 : request.getPageNumber();
-//        int pageSize = request.getPageSize() == null ? 0 : request.getPageSize();
-//
-//        return transactionDao.findAll(pageNum, pageSize);
-//    }
+
+    public Page<Transaction> findAll(QueryRequest request) {
+        return transactionDao.findAll(request.getPageNum(), request.getPageSize(), request.getSearchKey());
+    }
 
     public Page<Transaction> getAll(QueryRequest request) {
       return transactionDao.getAll(request);
